@@ -1,0 +1,35 @@
+version: '3.8' # Compose 文件版本（兼容 Docker 19.03+）
+
+services:
+  # 1. MongoDB 服务（后端依赖）
+  my-mongo:
+    image: mongo:4.4
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db # 数据持久化（容器删除后数据不丢）
+    restart: always # 故障自动重启
+
+  # 2. Node 后端服务
+  my-backend:
+    build: ./backend # 构建后端目录的 Dockerfile（默认会找该目录下的 Dockerfile）
+    ports:
+      - "3000:3000"
+    depends_on:
+      - my-mongo # 依赖 my-mongo 服务，启动顺序：先启动 mongo 再启动后端
+    restart: always
+    environment:
+      - MONGO_URL=mongodb://my-mongo:27017/testdb # 环境变量传递给后端
+
+  # 3. 前端 Nginx 服务
+  my-frontend:
+    build: ./frontend # 构建前端目录的 Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - my-backend # 依赖后端服务
+    restart: always
+
+# 数据卷定义（用于 MongoDB 数据持久化）
+volumes:
+  mongo-data:

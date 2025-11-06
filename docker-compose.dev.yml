@@ -1,0 +1,20 @@
+# 仅启动 MongoDB 服务
+
+# 👉👉 启动开发用 MongoDB（后台运行）
+# docker-compose -f docker-compose.dev.yml up -d
+# 👉👉 停止开发用 MongoDB
+# docker-compose -f docker-compose.dev.yml down
+
+version: '3'
+services:
+  # 仅启动 MongoDB 服务（本地开发依赖）
+  dev-mongo:
+    image: mongo:4.4
+    ports:
+      - "27017:27017" # 映射本地端口，方便本地服务连接
+    volumes:
+      - dev-mongo-data:/data/db # 数据持久化（开发数据不丢失）
+    restart: unless-stopped
+
+volumes:
+  dev-mongo-data:

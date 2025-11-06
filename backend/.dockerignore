@@ -1,0 +1,22 @@
+# 排除依赖文件夹（容器内会重新安装）
+node_modules/
+
+# 排除版本控制相关文件
+.git/
+.gitignore
+
+# 排除环境变量文件
+.env
+.env.local
+
+# 排除 npm 日志文件
+npm-debug.log
+yarn-error.log
+
+# 排除 IDE 配置文件（可选）
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 注意：不要加 dist/！除非后端是 TypeScript 且本地已编译（但容器内会重新编译）

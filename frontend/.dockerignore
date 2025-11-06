@@ -1,0 +1,25 @@
+# 排除本地构建产物（核心）
+dist/
+
+# 排除依赖文件夹（容器内会重新安装）
+node_modules/
+
+# 排除版本控制相关文件
+.git/
+.gitignore
+
+# 排除环境变量文件（本地开发用，容器内用 Docker Compose 配置）
+.env
+.env.local
+.env.development
+.env.production
+
+# 排除 npm 日志文件
+npm-debug.log
+yarn-error.log
+
+# 排除 IDE 配置文件（可选，避免复制无用文件）
+.idea/
+.vscode/
+*.swp
+*.swo
